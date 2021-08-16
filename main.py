@@ -33,7 +33,7 @@ def main_loop():
 
         lbl3.config(text=f"Selected Files : {file_counter}")
         lbl5.config(text=f"Rejected Files : {reject_counter}", fg="red")
-        lbl6.config(text=f"Affected Files : {affect_counter - (reject_counter + file_counter)}", fg="green")
+        lbl6.config(text=f"Generated Files : {affect_counter - (reject_counter + file_counter)}", fg="green")
 
     except:
         tkinter.messagebox.showerror("Oops!", "No file has been selected")
@@ -68,7 +68,7 @@ lbl5 = Label(root, text="Rejected Files : 0", fg="red")
 lbl5.config(font=("Arial", 15))
 lbl5.pack(pady=3)
 
-lbl6 = Label(root, text="Affected Files : 0", fg="green")
+lbl6 = Label(root, text="Generated Files : 0", fg="green")
 lbl6.config(font=("Arial", 15))
 lbl6.pack(pady=3)
 
@@ -78,7 +78,7 @@ lbl2.pack(side=BOTTOM, fill=X)
 lbl4 = Label(root, text="GitHub (@bathicodes)", fg="red", font=("Arial", 12), bg="#f1f1f1")
 lbl4.pack(side=BOTTOM, fill=X)
 
-but = Button(root, text="Select & Save", width=20, height=2, command=main_loop)
+but = Button(root, text="Select Folder", width=20, height=2, command=main_loop)
 but.pack(side=BOTTOM, pady=10)
 
 root.mainloop()
