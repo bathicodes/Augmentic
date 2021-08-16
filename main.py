@@ -7,18 +7,36 @@ from tkinter import filedialog
 
 def main_loop():
 
-    # select path
-    path = filedialog.askdirectory()
-    save_path = path + '/'
+    try:
+        # variable
+        file_counter = 0
+        reject_counter = 0
+        affect_counter = 0
 
-    dirpath = Path(path)
+        # select path
+        path = filedialog.askdirectory()
+        save_path = path + '/'
 
-    for file in dirpath.iterdir():
-        if file.suffix in [".png",".jpg",".jpeg",".tif", ".tiff",".bmp",".gif",".eps"]:
-            rotation.rotation(file, save_path)
-            flip.flip(file, save_path)
-        else:
-            pass
+        dirpath = Path(path)
+
+        for file in dirpath.iterdir():
+            file_counter += 1
+            if file.suffix in [".png",".jpg",".jpeg",".tif", ".tiff",".bmp",".gif",".eps"]:
+                rotation.rotation(file, save_path)
+                flip.flip(file, save_path)
+            else:
+                reject_counter += 1
+                pass
+
+        for file in dirpath.iterdir():
+            affect_counter += 1
+
+        lbl3.config(text=f"Selected Files : {file_counter}")
+        lbl5.config(text=f"Rejected Files : {reject_counter}", fg="red")
+        lbl6.config(text=f"Affected Files : {affect_counter - (reject_counter + file_counter)}", fg="green")
+
+    except:
+        tkinter.messagebox.showerror("Oops!", "No file has been selected")
 
 
 # ************************************************************
@@ -42,9 +60,17 @@ lbl1 = Label(root, text="Augmentic",fg="#7c40ff")
 lbl1.config(font=("Helvetica bold", 20))
 lbl1.pack(pady=10)
 
-lbl3 = Label(root, text="Image status : Pending")
+lbl3 = Label(root, text="Selected Files : 0")
 lbl3.config(font=("Arial", 15))
-lbl3.pack(pady=10)
+lbl3.pack(pady=3)
+
+lbl5 = Label(root, text="Rejected Files : 0", fg="red")
+lbl5.config(font=("Arial", 15))
+lbl5.pack(pady=3)
+
+lbl6 = Label(root, text="Affected Files : 0", fg="green")
+lbl6.config(font=("Arial", 15))
+lbl6.pack(pady=3)
 
 lbl2 = Label(root, text="Developed by Bathiya Seneviratne", fg="red", font=("Arial", 12), bg="#f1f1f1")
 lbl2.pack(side=BOTTOM, fill=X)
