@@ -21,7 +21,7 @@ def main_loop():
 
         for file in dirpath.iterdir():
             file_counter += 1
-            if file.suffix in [".png",".jpg",".jpeg",".tif", ".tiff",".bmp",".gif",".eps"]:
+            if file.suffix.lower() in [".png",".jpg",".jpeg",".tif", ".tiff",".bmp",".gif",".eps"]:
                 rotation.rotation(file, save_path)
                 flip.flip(file, save_path)
             else:
