@@ -1,12 +1,12 @@
 from pathlib import Path
 from filters import rotation
 from filters import flip 
+from filters import grayscales
 from tkinter import *
 import tkinter.messagebox
 from tkinter import filedialog
 
-def main_loop():
-
+def augmentation():
     try:
         # variable
         file_counter = 0
@@ -39,13 +39,45 @@ def main_loop():
         tkinter.messagebox.showerror("Oops!", "No file has been selected")
 
 
+def grayscale():
+    try:
+        # variable
+        file_counter = 0
+        reject_counter = 0
+        affect_counter = 0
+
+        # select path
+        path = filedialog.askdirectory()
+        save_path = path + '/'
+
+        dirpath = Path(path)
+
+        for file in dirpath.iterdir():
+            file_counter += 1
+            if file.suffix.lower() in [".png",".jpg",".jpeg",".tif", ".tiff",".bmp",".gif",".eps"]:
+                grayscales.grayscaler(file, save_path)
+            else:
+                reject_counter += 1
+                pass
+
+        for file in dirpath.iterdir():
+            affect_counter += 1
+
+        lbl3.config(text=f"Selected Files : {file_counter}")
+        lbl5.config(text=f"Rejected Files : {reject_counter}", fg="red")
+        lbl6.config(text=f"Generated Files : {affect_counter - (reject_counter + file_counter)}", fg="green")
+
+    except:
+        tkinter.messagebox.showerror("Oops!", "No file has been selected")
+
+
 # ************************************************************
 
 root = Tk()
 root.title("Augmentic")
 root.resizable(False, False)
 
-window_height = 280
+window_height = 400
 window_width = 300
 
 screen_width = root.winfo_screenwidth()
@@ -75,10 +107,10 @@ lbl6.pack(pady=3)
 lbl2 = Label(root, text="Developed by Bathiya Seneviratne", fg="red", font=("Arial", 12), bg="#f1f1f1")
 lbl2.pack(side=BOTTOM, fill=X)
 
-lbl4 = Label(root, text="GitHub (@bathicodes)", fg="red", font=("Arial", 12), bg="#f1f1f1")
-lbl4.pack(side=BOTTOM, fill=X)
+button = Button(root, text="Augmentation", width=20, height=2, command=augmentation)
+button.pack(side=BOTTOM, pady=10)
 
-but = Button(root, text="Select Folder", width=20, height=2, command=main_loop)
-but.pack(side=BOTTOM, pady=10)
+button1 = Button(root, text="Grayscale", width=20, height=2, command=grayscale)
+button1.pack(side=BOTTOM, pady=10)
 
 root.mainloop()
