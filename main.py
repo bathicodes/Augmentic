@@ -2,6 +2,7 @@ from pathlib import Path
 from filters import rotation
 from filters import flip 
 from filters import grayscales
+from filters.edges import edger
 from tkinter import *
 import tkinter.messagebox
 from tkinter import filedialog
@@ -71,13 +72,44 @@ def grayscale():
         tkinter.messagebox.showerror("Oops!", "No file has been selected")
 
 
+def edges():
+    try:
+        # variable
+        file_counter = 0
+        reject_counter = 0
+        affect_counter = 0
+
+        # select path
+        path = filedialog.askdirectory()
+        save_path = path + '/'
+
+        dirpath = Path(path)
+
+        for file in dirpath.iterdir():
+            file_counter += 1
+            if file.suffix.lower() in [".png",".jpg",".jpeg",".tif", ".tiff",".bmp",".gif",".eps"]:
+                edger(file, save_path)
+            else:
+                reject_counter += 1
+                pass
+
+        for file in dirpath.iterdir():
+            affect_counter += 1
+
+        lbl3.config(text=f"Selected Files : {file_counter}")
+        lbl5.config(text=f"Rejected Files : {reject_counter}", fg="red")
+        lbl6.config(text=f"Generated Files : {affect_counter - (reject_counter + file_counter)}", fg="green")
+
+    except:
+        tkinter.messagebox.showerror("Oops!", "No file has been selected")
+
 # ************************************************************
 
 root = Tk()
 root.title("Augmentic")
 root.resizable(False, False)
 
-window_height = 400
+window_height = 500
 window_width = 300
 
 screen_width = root.winfo_screenwidth()
@@ -104,8 +136,11 @@ lbl6 = Label(root, text="Generated Files : 0", fg="green")
 lbl6.config(font=("Arial", 15))
 lbl6.pack(pady=3)
 
-lbl2 = Label(root, text="Developed by Bathiya Seneviratne", fg="red", font=("Arial", 12), bg="#f1f1f1")
-lbl2.pack(side=BOTTOM, fill=X)
+lbl2 = Label(root, text="Developed by Bathiya Seneviratne", fg="red", font=("Arial", 12))
+lbl2.pack(side=BOTTOM, fill=X, pady=5)
+
+button2 = Button(root, text="Edges", width=20, height=2, command=edges)
+button2.pack(side=BOTTOM, pady=10)
 
 button = Button(root, text="Augmentation", width=20, height=2, command=augmentation)
 button.pack(side=BOTTOM, pady=10)
