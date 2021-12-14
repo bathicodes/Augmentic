@@ -109,7 +109,7 @@ root = Tk()
 root.title("Augmentic")
 root.resizable(False, False)
 
-window_height = 500
+window_height = 400
 window_width = 300
 
 screen_width = root.winfo_screenwidth()
@@ -120,8 +120,7 @@ y_cordinate = int((screen_height / 2) - (window_height / 2))
 
 root.geometry("{}x{}+{}+{}".format(window_width, window_height, x_cordinate, y_cordinate))
 
-lbl1 = Label(root, text="Augmentic",fg="#7c40ff")
-lbl1.config(font=("Helvetica bold", 20))
+lbl1 = Label(root, text=" ")
 lbl1.pack(pady=10)
 
 lbl3 = Label(root, text="Selected Files : 0")
@@ -136,7 +135,7 @@ lbl6 = Label(root, text="Generated Files : 0", fg="green")
 lbl6.config(font=("Arial", 15))
 lbl6.pack(pady=3)
 
-lbl2 = Label(root, text="Developed by Bathiya Seneviratne", fg="red", font=("Arial", 12))
+lbl2 = Label(root, text="Developed by Bathiya Seneviratne", fg="#7c40ff", font=("Arial", 12))
 lbl2.pack(side=BOTTOM, fill=X, pady=5)
 
 button2 = Button(root, text="Edges", width=20, height=2, command=edges)
